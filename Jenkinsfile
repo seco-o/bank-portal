@@ -1,22 +1,12 @@
-def OCP_S390X_TOKEN = '<sha256~zdCX5-Lo1dhQyqu5ZsTOwRdc-QQzzyjH-c0Qcdw>'
-def OCP_S390X_API_SERVER = '<https://c107.s390x.containers.ihost.local.com:6443>'
-// oc login --token=${OCP_S390X_TOKEN} --server=${OCP_S390X_API_SERVER}
-def OCP_AMD64_TOKEN = '<sha256~7dylK833xvHzms9VTl1-Ssj8MOqAEZ-HLzFb>'
-def OCP_AMD64_API_SERVER = '<https://c107.amd64.containers.cloud.ibm.com:6443>'
-//oc login --token=${OCP_AMD64_TOKEN} --server=${OCP_AMD64_API_SERVER}
 
 def DOCKER_REGISTRY_USER = 'src32'
-def DOCKER_REGISTRY_TOKEN = '<hQyqu5ZsTOwRdcLo1d-QQzzyjH-zdCX5>'
-def AMD64_LOCAL_IMAGE = 'portal-amd64'
+def AMD64_LOCAL_IMAGE = 'ibm-bank-portal-amd64'
 def TAG = 'v0.1'
+def ENVIRONMENT = 'production'
 
 node {
   try {
     stage('Checkout') {
-      //sh "echo ${OCP_S390X_TOKEN}"
-      //sh "echo ${OCP_AMD64_TOKEN}"
-      //sh "echo ${OCP_S390X_API_SERVER}"
-      //sh "echo ${OCP_AMD64_API_SERVER}"
       sh "echo ${DOCKER_REGISTRY_USER}"
       sh "echo ${AMD64_LOCAL_IMAGE}"
       sh "echo ${TAG}"
@@ -63,7 +53,7 @@ node {
             )
     }*/
 
-    stage('Deploy Image to OpenShift on x86 and s390x') {
+    stage('Deploy Image') {
       if (env.BRANCH_NAME == 'development' || env.BRANCH_NAME == 'preproduction') {
         dir('deploy') {
           echo 'Deploying to development or pre-production on S390X environment'
@@ -84,7 +74,7 @@ node {
           sh 'oc expose service portal' // Push new stream
         }
       }
-        if (env.BRANCH_NAME == 'master') {
+        if (ENVIRONMENT == 'production') {
         timeout(time: 2, unit: 'HOURS') {
             input message: 'Approve Deploy?', ok: 'Yes'
             echo 'Your request to deploy this release to poduction is approved'
