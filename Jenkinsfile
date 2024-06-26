@@ -10,29 +10,6 @@ def DOCKER_REGISTRY_TOKEN = '<hQyqu5ZsTOwRdcLo1d-QQzzyjH-zdCX5>'
 def AMD64_LOCAL_IMAGE = 'portal-amd64'
 def TAG = 'v0.1'
 
-def createOCPNamespaceIfNotExist(String nameSpace) {
-  echo "passing variable $nameSpace"
-  try {
-    sh "oc new-project $nameSpace"
-    echo 'Succeeded!'
-                      } catch (err) {
-    echo "The project you are trying to create is already exist: $nameSpace"
-  //echo "Failed: ${err}"
-  }
-  sh "oc project $nameSpace"
-}
-
-def deleteOCPDeploymentSVCRouteIfExist() {
-  try {
-    sh 'oc delete deployment portal-app'
-    sh 'oc delete svc portal'
-    sh 'oc delete route portal'
-    echo 'Succeeded!'
-                      } catch (err) {
-    echo ' the resource you are trying to delete doest not exist: portal'
-  //echo "Failed: ${err}"
-  }
-}
 node {
   try {
     stage('Checkout') {
@@ -47,9 +24,9 @@ node {
       checkout scm
     }
     stage('compile') {
-          withMaven {
+      withMaven {
         sh 'mvn clean install'
-          }
+      }
 
       dir('target') {
         sh 'cp bank-portal-1.0-SNAPSHOT.war ../build'
@@ -60,16 +37,7 @@ node {
       dir('build') {
         sh "docker build -t ${AMD64_LOCAL_IMAGE} --platform=linux/amd64 ."
       }
-    // sh "operator-sdk build ${AMD64_LOCAL_IMAGE} --image-build-args='--arch=amd64'"
     }
-
-    /*stage('create manifest') {
-        sh "podman manifest create portal:${TAG}"
-    }
-    stage('add manifest list') {
-      sh "podman manifest add portal:${TAG} containers-storage:localhost/${AMD64_LOCAL_IMAGE}"
-      sh "podman manifest add portal:${TAG}  containers-storage:localhost/${S390X_LOCAL_IMAGE}"
-    }*/
 
     stage('Push multi-arch image') {
       docker.withRegistry('', 'docker-src32-accesstoken') {
@@ -94,8 +62,6 @@ node {
                 }
             )
     }*/
-
-     /** END ---- Pre-integration Tests --------------- */
 
     stage('Deploy Image to OpenShift on x86 and s390x') {
       if (env.BRANCH_NAME == 'development' || env.BRANCH_NAME == 'preproduction') {
