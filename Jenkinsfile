@@ -23,6 +23,7 @@ node {
       sh "echo ${DOCKER_REGISTRY}"
       checkout scm
     }
+
     stage('compile') {
       withMaven {
         sh 'mvn clean install'
