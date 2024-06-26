@@ -39,7 +39,7 @@ node {
       }
     }
 
-    stage('Push multi-arch image') {
+    stage('Push image') {
       docker.withRegistry('', 'docker-src32-accesstoken') {
         sh "docker push ${DOCKER_REGISTRY_USER}/${AMD64_LOCAL_IMAGE}:${TAG}"
       }
