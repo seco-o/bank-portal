@@ -4,12 +4,11 @@ def OCP_S390X_API_SERVER = '<https://c107.s390x.containers.ihost.local.com:6443>
 def OCP_AMD64_TOKEN = '<sha256~7dylK833xvHzms9VTl1-Ssj8MOqAEZ-HLzFb>'
 def OCP_AMD64_API_SERVER = '<https://c107.amd64.containers.cloud.ibm.com:6443>'
 //oc login --token=${OCP_AMD64_TOKEN} --server=${OCP_AMD64_API_SERVER}
-def DOCKER_REGISTRY = 'docker.io'
+
 def DOCKER_REGISTRY_USER = 'src32'
 def DOCKER_REGISTRY_TOKEN = '<hQyqu5ZsTOwRdcLo1d-QQzzyjH-zdCX5>'
-// docker login -u=${DOCKER_REGISTRY_USER} -p=${DOCKER_REGISTRY_TOKEN}'
-def AMD64_LOCAL_IMAGE = 'portal:v0.3-amd64'
-def TAG = 'v0.3'
+def AMD64_LOCAL_IMAGE = 'portal-amd64'
+def TAG = 'v0.1'
 
 def createOCPNamespaceIfNotExist(String nameSpace) {
   echo "passing variable $nameSpace"
@@ -37,12 +36,11 @@ def deleteOCPDeploymentSVCRouteIfExist() {
 node('workers') {
   try {
     stage('Checkout') {
-      sh "echo ${OCP_S390X_TOKEN}"
-      sh "echo ${OCP_AMD64_TOKEN}"
-      sh "echo ${OCP_S390X_API_SERVER}"
-      sh "echo ${OCP_AMD64_API_SERVER}"
+      //sh "echo ${OCP_S390X_TOKEN}"
+      //sh "echo ${OCP_AMD64_TOKEN}"
+      //sh "echo ${OCP_S390X_API_SERVER}"
+      //sh "echo ${OCP_AMD64_API_SERVER}"
       sh "echo ${DOCKER_REGISTRY_USER}"
-      sh "echo ${DOCKER_REGISTRY_TOKEN}"
       sh "echo ${AMD64_LOCAL_IMAGE}"
       sh "echo ${TAG}"
       sh "echo ${DOCKER_REGISTRY}"
