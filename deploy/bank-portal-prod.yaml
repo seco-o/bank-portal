@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: portal
-          image: docker.io/src32/portal-amd64:v0.1
+          image: docker.io/src32/ibm-bank-portal:v0.1
           imagePullPolicy: Always
           ports:
             - containerPort: 9080
