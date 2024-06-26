@@ -35,7 +35,7 @@ node {
 
     stage('Build amd64 image') {
       dir('build') {
-        sh "docker build -t ${AMD64_LOCAL_IMAGE} --platform=linux/amd64 ."
+        sh "docker build -t ${DOCKER_REGISTRY_USER}/${AMD64_LOCAL_IMAGE}:${TAG} --platform=linux/amd64 ."
       }
     }
 
