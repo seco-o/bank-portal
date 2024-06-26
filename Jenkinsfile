@@ -113,9 +113,6 @@ node {
     stage('cleanup') {
       echo 'Clean up workspace'
         deleteDir()
-      echo 'remove all images'
-      sh 'docker image prune -a -f'
-      sh 'docker stop portal'
     // sh 'docker volume rm $(docker volume ls -qf dangling=true)'
     }
   }
