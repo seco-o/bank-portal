@@ -52,7 +52,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: portal.example.com
+    - host: ibm-bank.detera.local
       http:
         paths:
           - path: /
