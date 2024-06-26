@@ -35,8 +35,8 @@ spec:
     spec:
       containers:
         - name: portal
-          image: docker.io/tonyfieit/portal:v0.3
-          imagePullPolicy: IfNotPresent
+          image: docker.io/src32/portal-amd64:v0.1
+          imagePullPolicy: Always
           ports:
             - containerPort: 9080
       imagePullSecrets:
