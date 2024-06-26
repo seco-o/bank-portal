@@ -32,7 +32,6 @@ COPY ./licenses/LICENSE-2.0.txt /licenses
 # Add my app
 COPY --chown=1001:0 bank-portal-1.0-SNAPSHOT.war portal.war
 
-RUN echo '10.222.21.110 ibm-bank.detera.local' >> /etc/hosts
 
 VOLUME /tmp
 
