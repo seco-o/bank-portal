@@ -33,7 +33,7 @@ def deleteOCPDeploymentSVCRouteIfExist() {
   //echo "Failed: ${err}"
   }
 }
-node('workers') {
+node {
   try {
     stage('Checkout') {
       //sh "echo ${OCP_S390X_TOKEN}"
