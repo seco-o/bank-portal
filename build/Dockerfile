@@ -24,14 +24,15 @@ LABEL name="UBI TAT-Bank-Portal" \
       release="1" \
       summary="An example banking Portal API exists purely for educational purposes" \
       description="This is a Service that use to create a portal profile from banking industry"
-      
+
 #COPY licenses/ /licenses
 RUN mkdir /licenses
 COPY ./licenses/LICENSE-2.0.txt /licenses
-      
+
 # Add my app
 COPY --chown=1001:0 bank-portal-1.0-SNAPSHOT.war portal.war
 
+RUN echo '10.222.21.110 ibm-bank.detera.local' >> /etc/hosts
 
 VOLUME /tmp
 
