@@ -20,7 +20,6 @@ node {
       sh "echo ${DOCKER_REGISTRY_USER}"
       sh "echo ${AMD64_LOCAL_IMAGE}"
       sh "echo ${TAG}"
-      sh "echo ${DOCKER_REGISTRY}"
       checkout scm
     }
 
