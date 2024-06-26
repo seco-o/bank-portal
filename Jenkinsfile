@@ -1,6 +1,7 @@
 
 def DOCKER_REGISTRY_USER = 'src32'
 def AMD64_LOCAL_IMAGE = 'ibm-bank-portal'
+def SERVICE = 'bank-portal'
 def TAG = 'v0.1'
 def ENVIRONMENT = 'production'
 
@@ -19,7 +20,7 @@ node {
       }
 
       dir('target') {
-        sh 'cp bank-portal-1.0-SNAPSHOT.war ../build'
+        sh "cp ${SERVICE}-1.0-SNAPSHOT.war ../build"
       }
     }
 
