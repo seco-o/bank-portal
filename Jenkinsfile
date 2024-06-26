@@ -1,6 +1,6 @@
 
 def DOCKER_REGISTRY_USER = 'src32'
-def AMD64_LOCAL_IMAGE = 'ibm-bank-portal-amd64'
+def AMD64_LOCAL_IMAGE = 'ibm-bank-portal'
 def TAG = 'v0.1'
 def ENVIRONMENT = 'production'
 
@@ -54,50 +54,15 @@ node {
     }*/
 
     stage('Deploy Image') {
-      if (env.BRANCH_NAME == 'development' || env.BRANCH_NAME == 'preproduction') {
-        dir('deploy') {
-          echo 'Deploying to development or pre-production on S390X environment'
-          sh "oc login --insecure-skip-tls-verify --token=${OCP_S390X_TOKEN} --server=${OCP_S390X_API_SERVER}"
-          createOCPNamespaceIfNotExist('staging-deployment')
-
-          deleteOCPDeploymentSVCRouteIfExist()
-          sh 'oc create -f bank-portal.yaml' // & deployment config
-          sh 'oc expose service portal' // Push new stream
-
-                 /** IBM CLOUD - X86 ENVIRONMENT */
-          echo 'Deploying to development or pre-production on IBM Cloud on X86 environment'
-          sh "oc login --insecure-skip-tls-verify --token=${OCP_AMD64_TOKEN} --server=${OCP_AMD64_API_SERVER}"
-          createOCPNamespaceIfNotExist('staging-deployment')
-
-          deleteOCPDeploymentSVCRouteIfExist()
-          sh 'oc create -f bank-portal.yaml' // & deployment config
-          sh 'oc expose service portal' // Push new stream
+      if (ENVIRONMENT == 'production') {
+        timeout(time: 2, unit: 'HOURS') {
+          input message: 'Approve Deploy?', ok: 'Yes'
+          echo 'Your request to deploy this release to poduction is approved'
+          dir('deploy') {
+          //
+          }
         }
       }
-        if (ENVIRONMENT == 'production') {
-        timeout(time: 2, unit: 'HOURS') {
-            input message: 'Approve Deploy?', ok: 'Yes'
-            echo 'Your request to deploy this release to poduction is approved'
-            dir('deploy') {
-                /** LINUXONE/ONPREM - S390X ENVIRONMENT */
-                sh "oc login --insecure-skip-tls-verify --token=${OCP_S390X_TOKEN} --server=${OCP_S390X_API_SERVER}"
-            createOCPNamespaceIfNotExist('production-deployment')
-
-                deleteOCPDeploymentSVCRouteIfExist()
-                sh 'oc create -f bank-portal-prod.yaml' // & deployment config
-                sh 'oc expose service portal' // Push new stream
-
-               /** IBM CLOUD - X86 ENVIRONMENT */
-
-            sh "oc login --insecure-skip-tls-verify --token=${OCP_AMD64_TOKEN} --server=${OCP_AMD64_API_SERVER}"
-            createOCPNamespaceIfNotExist('production-deployment')
-
-                deleteOCPDeploymentSVCRouteIfExist()
-                sh 'oc create -f bank-portal-prod.yaml' // & deployment config
-                sh 'oc expose service portal' // Push new stream
-            }
-        }
-        }
     }
      } finally {
     stage('cleanup') {
