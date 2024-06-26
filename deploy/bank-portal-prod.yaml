@@ -61,4 +61,4 @@ spec:
               service:
                 name: portal
                 port:
-                  name: http
+                  number: 9080
