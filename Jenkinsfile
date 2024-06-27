@@ -5,6 +5,6 @@ commonPipeline(
     AMD64_LOCAL_IMAGE: 'ibm-bank-portal',
     SERVICE: 'bank-portal',
     TAG: 'v0.2',
-    ENVIRONMENT: 'production'
-    EXTENSION: "war"
+    ENVIRONMENT: 'production',
+    EXTENSION: 'war'
 )
