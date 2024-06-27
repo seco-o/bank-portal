@@ -6,4 +6,5 @@ commonPipeline(
     SERVICE: 'bank-portal',
     TAG: 'v0.2',
     ENVIRONMENT: 'production'
+    EXTENSION: "war"
 )
