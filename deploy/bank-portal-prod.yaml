@@ -21,7 +21,7 @@ metadata:
   namespace: ibm-bank
   labels:
     app: portal
-    version: v1
+    version: src32/ibm-bank-portal:v0.2
 spec:
   selector:
     matchLabels:
@@ -31,7 +31,7 @@ spec:
     metadata:
       labels:
         app: portal
-        version: v1
+        version: src32/ibm-bank-portal:v0.2
     spec:
       containers:
         - name: portal
