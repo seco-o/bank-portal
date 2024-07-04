@@ -21,21 +21,21 @@ metadata:
   namespace: ibm-bank
   labels:
     app: portal
-    version: v0.2
+    version: v0.3
 spec:
   selector:
     matchLabels:
       app: portal
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
         app: portal
-        version: v0.2
+        version: v0.3
     spec:
       containers:
         - name: portal
-          image: src32/ibm-bank-portal:v0.2
+          image: src32/ibm-bank-portal:v0.3
           imagePullPolicy: Always
           ports:
             - containerPort: 9080
