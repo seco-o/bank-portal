@@ -4,7 +4,7 @@ commonPipeline(
     DOCKER_REGISTRY_USER: 'src32',
     AMD64_LOCAL_IMAGE: 'ibm-bank-portal',
     SERVICE: 'bank-portal',
-    TAG: 'v0.3',
+    TAG: 'v0.4',
     ENVIRONMENT: 'production',
     EXTENSION: 'war'
 )
